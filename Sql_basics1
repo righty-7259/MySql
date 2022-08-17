@@ -1,0 +1,151 @@
+
+Setting environment for using XAMPP for Windows.
+HP@SOURABH c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| tcs                |
+| test               |
++--------------------+
+6 rows in set (0.027 sec)
+
+MariaDB [(none)]> use tcs;
+Database changed
+MariaDB [tcs]> show tables;
+Empty set (0.001 sec)
+
+MariaDB [tcs]> create table dept (dept_id int ,department_name varchar(30));
+Query OK, 0 rows affected (0.022 sec)
+
+MariaDB [tcs]> create table emp (emp_id int, emp_name varchar(20),D_id int);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [tcs]> insert into dept values(2001,Developer),(2002,Analytics),(2003,Management),(2004,Security),(2004, Multi_tasking);
+ERROR 1054 (42S22): Unknown column 'Developer' in 'field list'
+MariaDB [tcs]> insert into table dept values(2001,Developer),(2002,Analytics),(2003,Management),(2004,Security),(2004, Multi_tasking);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'table dept values(2001,Developer),(2002,Analytics),(2003,Management),(2004,Se...' at line 1
+MariaDB [tcs]> insert into dept value(2001,Developer),(2002,Analytics),(2003,Management),(2004,Security),(2004, Multi_tasking);
+ERROR 1054 (42S22): Unknown column 'Developer' in 'field list'
+MariaDB [tcs]> insert into dept values (2001,Developer),(2002,Analytics),(2003,Management),(2004,Security),(2004, Multi_tasking);
+ERROR 1054 (42S22): Unknown column 'Developer' in 'field list'
+MariaDB [tcs]> insert into table dept values(2001,'Developer'),(2002,'Analytics'),(2003,'Management'),(2004,'Security'),(2004, 'Multi_tasking');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'table dept values(2001,'Developer'),(2002,'Analytics'),(2003,'Management'),(2...' at line 1
+MariaDB [tcs]> insert into  dept values(2001,'Developer'),(2002,'Analytics'),(2003,'Management'),(2004,'Security'),(2004, 'Multi_tasking');
+Query OK, 5 rows affected (0.008 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [tcs]> select * from dept;
++---------+-----------------+
+| dept_id | department_name |
++---------+-----------------+
+|    2001 | Developer       |
+|    2002 | Analytics       |
+|    2003 | Management      |
+|    2004 | Security        |
+|    2004 | Multi_tasking   |
++---------+-----------------+
+5 rows in set (0.000 sec)
+
+MariaDB [tcs]> insert into emp values(1001,'Sourabh',2004),(1002,'Sumit',2003),(1003,'Sunny',2002 ),(1004,'Ketan',2001),(1005,'Nitin',2005);
+Query OK, 5 rows affected (0.009 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [tcs]> select * from emp;
++--------+----------+------+
+| emp_id | emp_name | D_id |
++--------+----------+------+
+|   1001 | Sourabh  | 2004 |
+|   1002 | Sumit    | 2003 |
+|   1003 | Sunny    | 2002 |
+|   1004 | Ketan    | 2001 |
+|   1005 | Nitin    | 2005 |
++--------+----------+------+
+5 rows in set (0.000 sec)
+
+MariaDB [tcs]> alter table emp add constranint my_fk foreign key (D_id) references dept(dept_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key (D_id) references dept(dept_id)' at line 1
+MariaDB [tcs]> alter table emp add constranint my_fk foreign key(D_id) references dept(dept_id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'foreign key(D_id) references dept(dept_id)' at line 1
+MariaDB [tcs]> alter table emp add constraint my_fk foreign key(D_id) references dept(dept_id);
+ERROR 1005 (HY000): Can't create table `tcs`.`emp` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [tcs]> update dept set dept_id=2005 where department_name='Security';
+Query OK, 1 row affected (0.008 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [tcs]> alter table emp add constraint my_fk foreign key(D_id) references dept(dept_id);
+ERROR 1005 (HY000): Can't create table `tcs`.`emp` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [tcs]> select * from dept;
++---------+-----------------+
+| dept_id | department_name |
++---------+-----------------+
+|    2001 | Developer       |
+|    2002 | Analytics       |
+|    2003 | Management      |
+|    2005 | Security        |
+|    2004 | Multi_tasking   |
++---------+-----------------+
+5 rows in set (0.000 sec)
+
+MariaDB [tcs]> flush;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [tcs]> alter table emp add constraint my_fk foreign key(D_id) references dept(dept_id);
+ERROR 1005 (HY000): Can't create table `tcs`.`emp` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [tcs]> alter table emp drop foreign key my_fk;
+ERROR 1091 (42000): Can't DROP FOREIGN KEY `my_fk`; check that it exists
+MariaDB [tcs]> desc emp;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| emp_id   | int(11)     | YES  |     | NULL    |       |
+| emp_name | varchar(20) | YES  |     | NULL    |       |
+| D_id     | int(11)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.018 sec)
+
+MariaDB [tcs]> alter table dept update dept_id int primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update dept_id int primary key' at line 1
+MariaDB [tcs]> alter table dept add primary key(dept_id);
+Query OK, 0 rows affected (0.043 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [tcs]> desc dept;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| dept_id         | int(11)     | NO   | PRI | NULL    |       |
+| department_name | varchar(30) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.016 sec)
+
+MariaDB [tcs]> alter table emp add constraint my_fk foreign key(D_id) references dept(dept_id);
+Query OK, 5 rows affected (0.056 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [tcs]> update emp set emp_id=2007 where department_name='Security';
+ERROR 1054 (42S22): Unknown column 'department_name' in 'where clause'
+MariaDB [tcs]> update emp set D_id=2007 where emp_id=1005;
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tcs`.`emp`, CONSTRAINT `my_fk` FOREIGN KEY (`D_id`) REFERENCES `dept` (`dept_id`))
+MariaDB [tcs]> Bye
+
+HP@SOURABH c:\xampp
+
+
+
+
+
+
