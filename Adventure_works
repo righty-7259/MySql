@@ -1,0 +1,215 @@
+
+Setting environment for using XAMPP for Windows.
+HP@SOURABH c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| classroom          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| tcs                |
+| test               |
++--------------------+
+7 rows in set (0.009 sec)
+
+MariaDB [(none)]> create database Adventure_works;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use adventure_works;
+Database changed
+MariaDB [adventure_works]> create table (order_date date, stock_date  date, order_no  varchar(30), product_key int,customer_key double,terriitory_key int,order_line int,order_quantity);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(order_date date, stock_date  date, order_no  varchar(30), product_key int,cu...' at line 1
+MariaDB [adventure_works]> create table sales (order_date date, stock_date  date, order_no  varchar(30), product_key int,customer_key double,terriitory_key int,order_line int,order_quantity);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ')' at line 1
+MariaDB [adventure_works]> create table sales (order_date date, stock_date  date, order_no  varchar(30), product_key int,customer_key double,terriitory_key int,order_line int,order_quantity int);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [adventure_works]> desc sales;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| order_date     | date        | YES  |     | NULL    |       |
+| stock_date     | date        | YES  |     | NULL    |       |
+| order_no       | varchar(30) | YES  |     | NULL    |       |
+| product_key    | int(11)     | YES  |     | NULL    |       |
+| customer_key   | double      | YES  |     | NULL    |       |
+| terriitory_key | int(11)     | YES  |     | NULL    |       |
+| order_line     | int(11)     | YES  |     | NULL    |       |
+| order_quantity | int(11)     | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+8 rows in set (0.017 sec)
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 rows;
+Query OK, 2630 rows affected, 5865 warnings (0.037 sec)
+Records: 2630  Deleted: 0  Skipped: 0  Warnings: 5865
+
+MariaDB [adventure_works]> select * from sales limit 10;
++------------+------------+----------+-------------+--------------+----------------+------------+----------------+
+| order_date | stock_date | order_no | product_key | customer_key | terriitory_key | order_line | order_quantity |
++------------+------------+----------+-------------+--------------+----------------+------------+----------------+
+| 2015-01-01 | 0000-00-00 | SO45080  |         332 |        14657 |              1 |          1 |              1 |
+| 2015-01-01 | 2001-05-12 | SO45079  |         312 |        29255 |              4 |          1 |              1 |
+| 2015-01-01 | 0000-00-00 | SO45082  |         350 |        11455 |              9 |          1 |              1 |
+| 2015-01-01 | 0000-00-00 | SO45081  |         338 |        26782 |              6 |          1 |              1 |
+| 2015-02-01 | 0000-00-00 | SO45083  |         312 |        14947 |             10 |          1 |              1 |
+| 2015-02-01 | 2001-12-10 | SO45084  |         310 |        29143 |              4 |          1 |              1 |
+| 2015-02-01 | 0000-00-00 | SO45086  |         314 |        18747 |              9 |          1 |              1 |
+| 2015-02-01 | 2001-09-10 | SO45085  |         312 |        18746 |              9 |          1 |              1 |
+| 2015-03-01 | 2001-03-10 | SO45093  |         312 |        18906 |              9 |          1 |              1 |
+| 2015-03-01 | 0000-00-00 | SO45090  |         310 |        29170 |              4 |          1 |              1 |
++------------+------------+----------+-------------+--------------+----------------+------------+----------------+
+10 rows in set (0.047 sec)
+
+MariaDB [adventure_works]> delete * from sales;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* from sales' at line 1
+MariaDB [adventure_works]> delete from sales;
+Query OK, 2630 rows affected (0.017 sec)
+
+MariaDB [adventure_works]> select * from sales;
+Empty set (0.001 sec)
+
+MariaDB [adventure_works]> alter table sales drop order_date date,stock_date date;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'date,stock_date date' at line 1
+MariaDB [adventure_works]> alter table sales drop column  order_date date,stock_date date;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'date,stock_date date' at line 1
+MariaDB [adventure_works]> alter table sales drop column  order_date,stock_date ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [adventure_works]> alter table sales drop column  order_date, stock_date ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [adventure_works]> alter table sales drop column  order_date;
+Query OK, 0 rows affected (0.020 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table sales drop column  stock_date;
+Query OK, 0 rows affected (0.016 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table sales add primary key (order_no);
+Query OK, 0 rows affected (0.045 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> desc sales;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| order_no       | varchar(30) | NO   | PRI | NULL    |       |
+| product_key    | int(11)     | YES  |     | NULL    |       |
+| customer_key   | double      | YES  |     | NULL    |       |
+| terriitory_key | int(11)     | YES  |     | NULL    |       |
+| order_line     | int(11)     | YES  |     | NULL    |       |
+| order_quantity | int(11)     | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.016 sec)
+
+MariaDB [adventure_works]> create table customers (customer_key double,prefix varchar(30),first_name varchar(30),last_name varchar(30),Martial_status varchar(20),gender varchar(30),email_id varchar(60),total_child int,Education varchar(30),occupation varchar(40),home_owner varchar(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [adventure_works]> create table customers (customer_key double,prefix varchar(30),first_name varchar(30),last_name varchar(30),Martial_status varchar(20),gender varchar(30),email_id varchar(60),total_child int,Education varchar(30),occupation varchar(40),home_owner varchar(30));
+Query OK, 0 rows affected (0.029 sec)
+
+MariaDB [adventure_works]> desc customers;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| customer_key   | double      | YES  |     | NULL    |       |
+| prefix         | varchar(30) | YES  |     | NULL    |       |
+| first_name     | varchar(30) | YES  |     | NULL    |       |
+| last_name      | varchar(30) | YES  |     | NULL    |       |
+| Martial_status | varchar(20) | YES  |     | NULL    |       |
+| gender         | varchar(30) | YES  |     | NULL    |       |
+| email_id       | varchar(60) | YES  |     | NULL    |       |
+| total_child    | int(11)     | YES  |     | NULL    |       |
+| Education      | varchar(30) | YES  |     | NULL    |       |
+| occupation     | varchar(40) | YES  |     | NULL    |       |
+| home_owner     | varchar(30) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+11 rows in set (0.018 sec)
+
+MariaDB [adventure_works]> alter table customers add primary key (customer_key);
+Query OK, 0 rows affected (0.042 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> create table product_category int primary key,category_name varchar(40);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'int primary key,category_name varchar(40)' at line 1
+MariaDB [adventure_works]> create table Product_category (product_category int primary key,category_name varchar(40));
+Query OK, 0 rows affected (0.029 sec)
+
+MariaDB [adventure_works]> desc product_category;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| product_category | int(11)     | NO   | PRI | NULL    |       |
+| category_name    | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+2 rows in set (0.018 sec)
+
+MariaDB [adventure_works]> create table Product_sub_category (Product_sub_category_key int primary key,subcategory_name varchar(40),productcategory_key int);
+Query OK, 0 rows affected (0.031 sec)
+
+MariaDB [adventure_works]> create table products(Product_key int primary key,Productsub_category_key int,Productsku varchar(40),product_name varchar(50),model_name varchar(50),Model_name varchar(50),product_description varchar(400),Product_colour varchar(40),Product_size varchar(40),Product_style varchar(40),product_cost float,product_price float);
+ERROR 1060 (42S21): Duplicate column name 'Model_name'
+MariaDB [adventure_works]> create table products(Product_key int primary key,Productsub_category_key int,Productsku varchar(40),product_name varchar(50),model_name varchar(50),product_description varchar(400),Product_colour varchar(40),Product_size varchar(40),Product_style varchar(40),product_cost float,product_price float);
+Query OK, 0 rows affected (0.029 sec)
+
+MariaDB [adventure_works]> desc products;
++-------------------------+--------------+------+-----+---------+-------+
+| Field                   | Type         | Null | Key | Default | Extra |
++-------------------------+--------------+------+-----+---------+-------+
+| Product_key             | int(11)      | NO   | PRI | NULL    |       |
+| Productsub_category_key | int(11)      | YES  |     | NULL    |       |
+| Productsku              | varchar(40)  | YES  |     | NULL    |       |
+| product_name            | varchar(50)  | YES  |     | NULL    |       |
+| model_name              | varchar(50)  | YES  |     | NULL    |       |
+| product_description     | varchar(400) | YES  |     | NULL    |       |
+| Product_colour          | varchar(40)  | YES  |     | NULL    |       |
+| Product_size            | varchar(40)  | YES  |     | NULL    |       |
+| Product_style           | varchar(40)  | YES  |     | NULL    |       |
+| product_cost            | float        | YES  |     | NULL    |       |
+| product_price           | float        | YES  |     | NULL    |       |
++-------------------------+--------------+------+-----+---------+-------+
+11 rows in set (0.019 sec)
+
+MariaDB [adventure_works]> create table territories (sales_territories int,country varchar(40),continentvarchar(40);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(40)' at line 1
+MariaDB [adventure_works]> create table territories (sales_territories int,country varchar(40),continentvarchar(40));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(40))' at line 1
+MariaDB [adventure_works]> create table territories (sales_territories int,country varchar(40),continent varchar(40));
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [adventure_works]> desc territories;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| sales_territories | int(11)     | YES  |     | NULL    |       |
+| country           | varchar(40) | YES  |     | NULL    |       |
+| continent         | varchar(40) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.018 sec)
+
+MariaDB [adventure_works]> alter table territories add primary key (sales_territories);
+Query OK, 0 rows affected (0.042 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> desc territories;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| sales_territories | int(11)     | NO   | PRI | NULL    |       |
+| country           | varchar(40) | YES  |     | NULL    |       |
+| continent         | varchar(40) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.016 sec)
+
+MariaDB [adventure_works]>
