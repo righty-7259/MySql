@@ -1,0 +1,50 @@
+MariaDB [tcs]> use classroom;
+Database changed
+MariaDB [classroom]> create table teachers (t_id int ,t_name varchar(30));
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [classroom]> insert into teachers values(2003,'sumit'),(3002,'Sourabh'),(4003,'sunny');
+Query OK, 3 rows affected (0.009 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [classroom]> create view  my_view1 as (select * from teachers where t_id<3000);
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [classroom]> select* from my_view1;
++------+--------+
+| t_id | t_name |
++------+--------+
+| 2003 | sumit  |
++------+--------+
+1 row in set (0.001 sec)
+
+MariaDB [classroom]> insert into teachers values(2444,'ravi');
+Query OK, 1 row affected (0.008 sec)
+
+MariaDB [classroom]> select* from my_view1;
++------+--------+
+| t_id | t_name |
++------+--------+
+| 2003 | sumit  |
+| 2444 | ravi   |
++------+--------+
+2 rows in set (0.001 sec)
+
+MariaDB [classroom]> insert into my_view1 (2999,'tushar');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '2999,'tushar')' at line 1
+MariaDB [classroom]> insert into my_view1 values(2999,'tushar');
+Query OK, 1 row affected (0.008 sec)
+
+MariaDB [classroom]> select*from teachers;
++------+---------+
+| t_id | t_name  |
++------+---------+
+| 2003 | sumit   |
+| 3002 | Sourabh |
+| 4003 | sunny   |
+| 2444 | ravi    |
+| 2999 | tushar  |
++------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [classroom]>
