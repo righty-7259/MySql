@@ -213,3 +213,198 @@ MariaDB [adventure_works]> desc territories;
 3 rows in set (0.016 sec)
 
 MariaDB [adventure_works]>
+
+Setting environment for using XAMPP for Windows.
+HP@SOURABH c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| adventure_works    |
+| classroom          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| tcs                |
+| test               |
++--------------------+
+8 rows in set (0.004 sec)
+
+MariaDB [(none)]> use adventure_works;
+Database changed
+MariaDB [adventure_works]> show tables;
++---------------------------+
+| Tables_in_adventure_works |
++---------------------------+
+| customers                 |
+| product_category          |
+| product_sub_category      |
+| products                  |
+| sales                     |
+| territories               |
++---------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [adventure_works]> desc customers;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| customer_key   | double      | NO   | PRI | NULL    |       |
+| prefix         | varchar(30) | YES  |     | NULL    |       |
+| first_name     | varchar(30) | YES  |     | NULL    |       |
+| last_name      | varchar(30) | YES  |     | NULL    |       |
+| Martial_status | varchar(20) | YES  |     | NULL    |       |
+| gender         | varchar(30) | YES  |     | NULL    |       |
+| email_id       | varchar(60) | YES  |     | NULL    |       |
+| total_child    | int(11)     | YES  |     | NULL    |       |
+| Education      | varchar(30) | YES  |     | NULL    |       |
+| occupation     | varchar(40) | YES  |     | NULL    |       |
+| home_owner     | varchar(30) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+11 rows in set (0.026 sec)
+
+MariaDB [adventure_works]> desc product_category;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| product_category | int(11)     | NO   | PRI | NULL    |       |
+| category_name    | varchar(40) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+2 rows in set (0.020 sec)
+
+MariaDB [adventure_works]> desc product_sub_category;
++--------------------------+-------------+------+-----+---------+-------+
+| Field                    | Type        | Null | Key | Default | Extra |
++--------------------------+-------------+------+-----+---------+-------+
+| Product_sub_category_key | int(11)     | NO   | PRI | NULL    |       |
+| subcategory_name         | varchar(40) | YES  |     | NULL    |       |
+| productcategory_key      | int(11)     | YES  |     | NULL    |       |
++--------------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.018 sec)
+
+MariaDB [adventure_works]> desc sales;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| order_no       | varchar(30) | NO   | PRI | NULL    |       |
+| product_key    | int(11)     | YES  |     | NULL    |       |
+| customer_key   | double      | YES  |     | NULL    |       |
+| terriitory_key | int(11)     | YES  |     | NULL    |       |
+| order_line     | int(11)     | YES  |     | NULL    |       |
+| order_quantity | int(11)     | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+6 rows in set (0.018 sec)
+
+MariaDB [adventure_works]> desc products;
++-------------------------+--------------+------+-----+---------+-------+
+| Field                   | Type         | Null | Key | Default | Extra |
++-------------------------+--------------+------+-----+---------+-------+
+| Product_key             | int(11)      | NO   | PRI | NULL    |       |
+| Productsub_category_key | int(11)      | YES  |     | NULL    |       |
+| Productsku              | varchar(40)  | YES  |     | NULL    |       |
+| product_name            | varchar(50)  | YES  |     | NULL    |       |
+| model_name              | varchar(50)  | YES  |     | NULL    |       |
+| product_description     | varchar(400) | YES  |     | NULL    |       |
+| Product_colour          | varchar(40)  | YES  |     | NULL    |       |
+| Product_size            | varchar(40)  | YES  |     | NULL    |       |
+| Product_style           | varchar(40)  | YES  |     | NULL    |       |
+| product_cost            | float        | YES  |     | NULL    |       |
+| product_price           | float        | YES  |     | NULL    |       |
++-------------------------+--------------+------+-----+---------+-------+
+11 rows in set (0.017 sec)
+
+MariaDB [adventure_works]> desc territories;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| sales_territories | int(11)     | NO   | PRI | NULL    |       |
+| country           | varchar(40) | YES  |     | NULL    |       |
+| continent         | varchar(40) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.017 sec)
+
+MariaDB [adventure_works]> alter table sales add constraint product_fk1 foreign key (product_key) references products(product_key);
+Query OK, 0 rows affected (0.035 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table sales add constraint customer_fk2 foreign key (customer_key) references customers(customer_key);
+Query OK, 0 rows affected (0.045 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table sales add constraint territory_fk3 foreign key (terriitory_key) references territories(sales_territories);
+Query OK, 0 rows affected (0.044 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table product_sub_category add constraint product_category_fk4 foreign key (productcategory_key) references product_category (product_category);
+Query OK, 0 rows affected (0.045 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> alter table products add constraint product_subcategory_fk5 foreign key (productsub_category_key) references product_sub_category (product_sub_category_key);
+Query OK, 0 rows affected (0.039 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [(none)]> use adventure_works;
+Database changed
+MariaDB [adventure_works]> show tables;
++---------------------------+
+| Tables_in_adventure_works |
++---------------------------+
+| customers                 |
+| product_category          |
+| product_sub_category      |
+| products                  |
+| sales                     |
+| territories               |
++---------------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"'lines tereminated by '\n' ignore 1 rows;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'tereminated by '\n' ignore 1 rows' at line 1
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"' lines tereminated by '\n' ignore 1 rows;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'tereminated by '\n' ignore 1 rows' at line 1
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`adventure_works`.`sales`, CONSTRAINT `product_fk1` FOREIGN KEY (`product_key`) REFERENCES `products` (`Product_key`))
+MariaDB [adventure_works]> load data infile "D:\DATA ANALYTICS\SQL\AdventureWorks_Customers.csv" into table customers fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+ERROR 29 (HY000): File 'D:\DATA ANALYTICSSQLAdventureWorks_Customers.csv' not found (Errcode: 2 "No such file or directory")
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Customers.csv" into table customers fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+Query OK, 18148 rows affected, 36425 warnings (0.140 sec)
+Records: 18148  Deleted: 0  Skipped: 0  Warnings: 36425
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\Adventure_works\\Adventure_works\\AdventureWorks_Product_Categories.csv" into table product_category fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+Query OK, 4 rows affected (0.016 sec)
+Records: 4  Deleted: 0  Skipped: 0  Warnings: 0
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\Adventure_works\\Adventure_works\\AdventureWorks_Product_Subcategories.csv" into table product_category fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+ERROR 29 (HY000): File 'D:\DATA ANALYTICSAdventure_works\Adventure_works\AdventureWorks_Product_Subcategories.csv' not found (Errcode: 2 "No such file or directory")
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\Adventure_works\\Adventure_works\\AdventureWorks_Product_Subcategories.csv" into table product_category fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\Adventure_works\\Adventure_works\\AdventureWorks_Product_Subcategories.csv" into table product_sub_category fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+Query OK, 37 rows affected, 37 warnings (0.013 sec)
+Records: 37  Deleted: 0  Skipped: 0  Warnings: 37
+
+MariaDB [adventure_works]> load data infile"D:\\DATA ANALYTICS\\Adventure_works\\Adventure_works\\AdventureWorks_Territories.csv" into table territories fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+Query OK, 10 rows affected, 10 warnings (0.015 sec)
+Records: 10  Deleted: 0  Skipped: 0  Warnings: 10
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`adventure_works`.`sales`, CONSTRAINT `product_fk1` FOREIGN KEY (`product_key`) REFERENCES `products` (`Product_key`))
+MariaDB [adventure_works]> alter table sales drop foreign key product_fk1;
+Query OK, 0 rows affected (0.018 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [adventure_works]> load data infile "D:\\DATA ANALYTICS\\SQL\\AdventureWorks_Sales_2015.csv" into table sales fields terminated by ',' enclosed by '"'  lines terminated by '\n' ignore 1 rows;
+Query OK, 2630 rows affected, 2630 warnings (0.105 sec)
+Records: 2630  Deleted: 0  Skipped: 0  Warnings: 2630
+
+MariaDB [adventure_works]>
