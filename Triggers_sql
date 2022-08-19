@@ -1,0 +1,53 @@
+MariaDB [(none)]> select classroom;
+ERROR 1054 (42S22): Unknown column 'classroom' in 'field list'
+MariaDB [(none)]> use classroom;
+Database changed
+MariaDB [classroom]> select * from teachers;
++------+---------+
+| t_id | t_name  |
++------+---------+
+| 2003 | sumit   |
+| 3002 | Sourabh |
+| 4003 | sunny   |
+| 2444 | ravi    |
+| 2999 | tushar  |
++------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [classroom]> create trigger my_trig before insert on teachers for each row
+    ->     -> begin
+    ->     -> if new.t_id <2000 then set new.t_id=2005;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-> begin
+    -> if new.t_id <2000 then set new.t_id=2005' at line 2
+MariaDB [classroom]> create trigger my_trig before insert on teachers for each row
+    ->     -> begin
+    ->     -> if new.t_id <2000 then set new.t_id=2005;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-> begin
+    -> if new.t_id <2000 then set new.t_id=2005' at line 2
+MariaDB [classroom]> delimiter //
+MariaDB [classroom]> create trigger my_trig before insert on teachers for each row
+    -> begin
+    -> if new.t_id <2000 then set new.t_id=2005;
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [classroom]> insert into teachers values(1000,'Doreks');
+    -> //
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [classroom]> select * from teachers;
+    -> //
++------+---------+
+| t_id | t_name  |
++------+---------+
+| 2003 | sumit   |
+| 3002 | Sourabh |
+| 4003 | sunny   |
+| 2444 | ravi    |
+| 2999 | tushar  |
+| 2005 | Doreks  |
++------+---------+
+6 rows in set (0.000 sec)
+
+MariaDB [classroom]>
