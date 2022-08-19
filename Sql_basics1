@@ -143,6 +143,82 @@ ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint f
 MariaDB [tcs]> Bye
 
 HP@SOURABH c:\xampp
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| adventure_works    |
+| classroom          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| tcs                |
+| test               |
++--------------------+
+8 rows in set (0.009 sec)
+
+MariaDB [(none)]> use classroom;
+Database changed
+MariaDB [classroom]> show tables;
++---------------------+
+| Tables_in_classroom |
++---------------------+
+| my_view1            |
+| teachers            |
++---------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [classroom]> create table students1 (name varchar,s_id int , age int ,lucky_no int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 's_id int , age int ,lucky_no int)' at line 1
+MariaDB [classroom]> create table students1 (name varchar(20) ,s_id int , age int ,lucky_no int);
+Query OK, 0 rows affected (0.021 sec)
+
+MariaDB [classroom]> create table students2 (name varchar(20) ,s_id int , age int ,lucky_no int);
+Query OK, 0 rows affected (0.020 sec)
+
+MariaDB [classroom]> delimiter //
+MariaDB [classroom]> create trigger trig_1 after insert on students1 for each row
+    -> begin
+    -> ;
+    -> bkjxck;
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ';
+bkjxck' at line 3
+MariaDB [classroom]> delimiter //
+MariaDB [classroom]> create trigger trig_1 before insert on students1 for each row
+    -> begin
+    -> insert into students2 values(new.name varchar(30),new.s_id int, new.age int , new.lucky_no int);
+    -> end
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'varchar(30),new.s_id int, new.age int , new.lucky_no int);
+end' at line 3
+MariaDB [classroom]> delimiter //
+MariaDB [classroom]> create trigger trig_1 before insert on students1 for each row
+    -> begin
+    -> insert into students2 values(new.name ,new.s_id , new.age , new.lucky_no );
+    -> end
+    -> //
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [classroom]> insert into students1 values('sourabh',1,20,35),('sumit',2,23,45),('sagar',3,43,49);
+    -> //
+Query OK, 3 rows affected (0.066 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [classroom]> select* from students2;
+    -> //
++---------+------+------+----------+
+| name    | s_id | age  | lucky_no |
++---------+------+------+----------+
+| sourabh |    1 |   20 |       35 |
+| sumit   |    2 |   23 |       45 |
+| sagar   |    3 |   43 |       49 |
++---------+------+------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [classroom]>
+
 
 
 
