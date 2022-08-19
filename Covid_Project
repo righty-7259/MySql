@@ -1,0 +1,62 @@
+MariaDB [(none)]> create database Covid_Project;
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| adventure_works    |
+| classroom          |
+| covid_project      |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| tcs                |
+| test               |
++--------------------+
+9 rows in set (0.001 sec)
+
+MariaDB [(none)]> use covid_project;
+Database changed
+MariaDB [covid_project]> create table covid_death (iso_code varchar(30),continent varchar(30),location varchar(30),date date,population double, total_cases double,new_cases double,new_cases-smoothed float,total_deaths double,new_deaths double,new_deaths_smoothed float,total_cases_per_million float,new_cases_per_million float,new_cases_smoothed_per_million float,total_deaths_per_million float,new_deaths_per_million float,new_deaths_smoothed_per_million float,reproduction_rate float,icu_patients double,icu_patients_per_million float,hosp_patients double,hosp_patients_per_million float,weekly_icu_admissions double,weekly_icu_admissions_per_million float,weekly_hosp_admissions double,weekly_hosp_admission_per_million float;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-smoothed float,total_deaths double,new_deaths double,new_deaths_smoothed flo...' at line 1
+MariaDB [covid_project]> create table covid_death (iso_code varchar(30),continent varchar(30),location varchar(30),date date,population double, total_cases double,new_cases double,new_cases_smoothed float,total_deaths double,new_deaths double,new_deaths_smoothed float,total_cases_per_million float,new_cases_per_million float,new_cases_smoothed_per_million float,total_deaths_per_million float,new_deaths_per_million float,new_deaths_smoothed_per_million float,reproduction_rate float,icu_patients double,icu_patients_per_million float,hosp_patients double,hosp_patients_per_million float,weekly_icu_admissions double,weekly_icu_admissions_per_million float,weekly_hosp_admissions double,weekly_hosp_admission_per_million float;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [covid_project]> create table covid_death (iso_code varchar(30),continent varchar(30),location varchar(30),date date,population double, total_cases double,new_cases double,new_cases_smoothed float,total_deaths double,new_deaths double,new_deaths_smoothed float,total_cases_per_million float,new_cases_per_million float,new_cases_smoothed_per_million float,total_deaths_per_million float,new_deaths_per_million float,new_deaths_smoothed_per_million float,reproduction_rate float,icu_patients double,icu_patients_per_million float,hosp_patients double,hosp_patients_per_million float,weekly_icu_admissions double,weekly_icu_admissions_per_million float,weekly_hosp_admissions double,weekly_hosp_admission_per_million float);
+Query OK, 0 rows affected (0.026 sec)
+
+MariaDB [covid_project]> desc covid_death;
++-----------------------------------+-------------+------+-----+---------+-------+
+| Field                             | Type        | Null | Key | Default | Extra |
++-----------------------------------+-------------+------+-----+---------+-------+
+| iso_code                          | varchar(30) | YES  |     | NULL    |       |
+| continent                         | varchar(30) | YES  |     | NULL    |       |
+| location                          | varchar(30) | YES  |     | NULL    |       |
+| date                              | date        | YES  |     | NULL    |       |
+| population                        | double      | YES  |     | NULL    |       |
+| total_cases                       | double      | YES  |     | NULL    |       |
+| new_cases                         | double      | YES  |     | NULL    |       |
+| new_cases_smoothed                | float       | YES  |     | NULL    |       |
+| total_deaths                      | double      | YES  |     | NULL    |       |
+| new_deaths                        | double      | YES  |     | NULL    |       |
+| new_deaths_smoothed               | float       | YES  |     | NULL    |       |
+| total_cases_per_million           | float       | YES  |     | NULL    |       |
+| new_cases_per_million             | float       | YES  |     | NULL    |       |
+| new_cases_smoothed_per_million    | float       | YES  |     | NULL    |       |
+| total_deaths_per_million          | float       | YES  |     | NULL    |       |
+| new_deaths_per_million            | float       | YES  |     | NULL    |       |
+| new_deaths_smoothed_per_million   | float       | YES  |     | NULL    |       |
+| reproduction_rate                 | float       | YES  |     | NULL    |       |
+| icu_patients                      | double      | YES  |     | NULL    |       |
+| icu_patients_per_million          | float       | YES  |     | NULL    |       |
+| hosp_patients                     | double      | YES  |     | NULL    |       |
+| hosp_patients_per_million         | float       | YES  |     | NULL    |       |
+| weekly_icu_admissions             | double      | YES  |     | NULL    |       |
+| weekly_icu_admissions_per_million | float       | YES  |     | NULL    |       |
+| weekly_hosp_admissions            | double      | YES  |     | NULL    |       |
+| weekly_hosp_admission_per_million | float       | YES  |     | NULL    |       |
++-----------------------------------+-------------+------+-----+---------+-------+
+26 rows in set (0.018 sec)
+
+MariaDB [covid_project]>
