@@ -1,0 +1,17 @@
+MariaDB [(none)]> use superstore;
+Database changed
+MariaDB [superstore]> delimiter &&
+MariaDB [superstore]> create procedure func2(in name varchar(30))
+    -> begin
+    -> select "My name is ",name as " ";
+    -> end &&
+Query OK, 0 rows affected, 1 warning (0.011 sec)
+
+MariaDB [superstore]> call func2("Sourabh");
+    -> &&
++-------------+---------+
+| My name is  |         |
++-------------+---------+
+| My name is  | Sourabh |
++-------------+---------+
+1 row in set (0.001 sec)
