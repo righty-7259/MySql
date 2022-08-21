@@ -50,3 +50,27 @@ MariaDB [superstore]> select @s;
 | 12642507 |
 +----------+
 1 row in set (0.000 sec)
+MariaDB [(none)]> use superstore;
+Database changed
+MariaDB [superstore]> delimiter &&
+MariaDB [superstore]> create procedure details (in city_name varchar(30), out city_profit double)
+    -> begin
+    -> select round(sum(profit)) into city_profit from orders where city_name=city_name;
+    -> end &&
+Query OK, 0 rows affected (0.019 sec)
+
+MariaDB [superstore]> call details ("jaipur") , @profit);&&
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' @profit)' at line 1
+MariaDB [superstore]> call details (("jaipur") , @profit);&&
+Query OK, 1 row affected (0.139 sec)
+
+MariaDB [superstore]> select @profit;
+    -> &&
++---------+
+| @profit |
++---------+
+| 1467457 |
++---------+
+1 row in set (0.000 sec)
+
+MariaDB [superstore]>
