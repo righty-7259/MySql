@@ -15,3 +15,38 @@ MariaDB [superstore]> call func2("Sourabh");
 | My name is  | Sourabh |
 +-------------+---------+
 1 row in set (0.001 sec)
+MariaDB [superstore]> delimiter &&
+MariaDB [superstore]> create procedure city_func(in city_name varchar(40))
+    -> begin
+    -> select segment,round(sum(sales)) as total_sales,round(sum(profit)) as profit from orders where city= city_name group by segment;
+    -> end &&
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [superstore]> call city_func('jaipur');
+    -> &&
++-------------+-------------+--------+
+| segment     | total_sales | profit |
++-------------+-------------+--------+
+| Consumer    |        3948 |   1045 |
+| Corporate   |         164 |     45 |
+| Home Office |        2422 |     13 |
++-------------+-------------+--------+
+MariaDB [superstore]> delimiter &&
+MariaDB [superstore]> create procedure sum_sales(out sum int)
+    -> begin
+    -> select round(sum(sales)) into sum from orders;
+    -> end &&
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [superstore]> call sum_sales(@s);
+    -> &&
+Query OK, 1 row affected (0.036 sec)
+
+MariaDB [superstore]> select @s;
+    -> &&
++----------+
+| @s       |
++----------+
+| 12642507 |
++----------+
+1 row in set (0.000 sec)
