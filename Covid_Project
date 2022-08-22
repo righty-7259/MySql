@@ -60,3 +60,11 @@ MariaDB [covid_project]> desc covid_death;
 26 rows in set (0.018 sec)
 
 MariaDB [covid_project]>
+MariaDB [covid_project]> create table covid_vaccination(iso_code varchar(40),continent varchar(40) ,location varchar(40), date date ,new_tests int,total_tests double,total_test_per_thousand float,new_tests_per_thousand float,new_tests_smoothed double,new_tests_smoothed_per_thousands int,Positive_rate float,test_per_case float,test_units varchar(40),total_vacination int,people_vaccinated int,people_fully_vaccinated int,new_vaccination int,new_vaccination_smoothed int,total_vaccination_per_hundred float,people_vaccinated_per_hundred float,people_fully_vaccinated_per_hundred float,new_vaccinations_smoothed_per_million float,stringency_index float,population_density float,median_age int,aged_65_older float,aged_70_older float,gdp_per_capita float,extreme_poverty float,cardiovasc_death_rate float,diabetes_pervalence float,female_smokers float,male_smokers float,handwashing_facilities float,beds_per_thousands float,life_expactancy float,human_development_index float);
+Query OK, 0 rows affected (0.032 sec)
+MariaDB [covid_project]> load data infile "D:\\My_Projects\\CovidDeaths.csv" into table covid_death  fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 rows;
+Query OK, 85171 rows affected, 65535 warnings (1.547 sec)
+Records: 85171  Deleted: 0  Skipped: 0  Warnings: 726892
+MariaDB [covid_project]> load data infile "D:\\My_Projects\\covid_vaccination.csv" into table covid_vaccination  fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 rows;
+Query OK, 85171 rows affected, 65535 warnings (2.246 sec)
+Records: 85171  Deleted: 0  Skipped: 0  Warnings: 1330930
