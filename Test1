@@ -1,0 +1,118 @@
+MariaDB [new1]> create table table1(name varchar(30),s_id int);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [new1]> create table table2(name varchar(30),s_id int);
+Query OK, 0 rows affected (0.028 sec)
+
+MariaDB [new1]> delimiter $$
+MariaDB [new1]> create trigger trigger1 after insert on table1 for each row
+    -> begin
+    -> insert into table2 values (new.name,new.s_id);
+    -> end $$
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [new1]> insert into table1 values('sourabh',2);
+    -> $$
+Query OK, 1 row affected (0.041 sec)
+
+MariaDB [new1]> select*from table2;
+    -> $$
++---------+------+
+| name    | s_id |
++---------+------+
+| sourabh |    2 |
++---------+------+
+1 row in set (0.000 sec)
+
+________________________________________________________________________________________________________________________________________________________________________
+Q1 . Find all the customers from Oceania region who have ever purchased 'Tables' and the number of tables purchased(display the customer name, no of tables purchased)
+MariaDB [superstore]> select customer_name,count(order_id) as tables_purchased from orders where region=oceania and sub_category='Tables' group by customer_name;
+ERROR 1054 (42S22): Unknown column 'oceania' in 'where clause'
+MariaDB [superstore]> select customer_name,count(order_id) as tables_purchased from orders where region='oceania' and sub_category='Tables' group by customer_name;
++------------------+------------------+
+| customer_name    | tables_purchased |
++------------------+------------------+
+| Amy Cox          |                1 |
+| Barbara Fisher   |                2 |
+| Bill Stewart     |                1 |
+| Brendan Murry    |                1 |
+| Brian Derr       |                1 |
+| Bruce Stewart    |                1 |
+| Bryan Mills      |                1 |
+| Candace McMahon  |                1 |
+| Charles Sheldon  |                1 |
+| Christina DeMoss |                1 |
+| David Wiener     |                1 |
+| Deanra Eno       |                1 |
+| Dennis Pardue    |                2 |
+| Doug O'Connell   |                1 |
+| Frank Gastineau  |                1 |
+| Gary Zandusky    |                1 |
+| Grace Kelly      |                1 |
+| Guy Armstrong    |                1 |
+| Harold Dahlen    |                1 |
+| Heather Jas      |                1 |
+| Heather Kirkland |                1 |
+| Jane Waco        |                1 |
+| Jeremy Pistek    |                1 |
+| Julie Creighton  |                1 |
+| Laurel Elliston  |                1 |
+| Lisa Ryan        |                1 |
+| Maxwell Schwartz |                1 |
+| Michael Kennedy  |                1 |
+| Mick Brown       |                1 |
+| Mick Crebagga    |                1 |
+| Nat Carroll      |                1 |
+| Nicole Hansen    |                2 |
+| Noah Childs      |                1 |
+| Odella Nelson    |                1 |
+| Paul Stevenson   |                1 |
+| Pete Kriz        |                1 |
+| Ricardo Emerson  |                1 |
+| Sean Braxton     |                1 |
+| Shui Tom         |                1 |
+| Steve Chapman    |                1 |
+| Stuart Van       |                1 |
+| Sung Pak         |                1 |
+| Susan Gilcrest   |                1 |
+| Thomas Brumley   |                1 |
+| Thomas Seio      |                1 |
+| Tom Boeckenhauer |                1 |
+| Troy Staebel     |                1 |
+| Trudy Brown      |                1 |
+| Victoria Wilson  |                1 |
+| Yoseph Carroll   |                1 |
++------------------+------------------+
+50 rows in set (0.097 sec)
+_________________________________________________________________________________________________________________________________________________________________
+Write a SQL query to find the 3rd highest sales
+MariaDB [superstore]> select round(sales,2) as third_highest from orders order by sales desc limit 2,1;
++---------------+
+| third_highest |
++---------------+
+|      13999.96 |
++---------------+
+1 row in set (0.032 sec)
+_____________________________________________________________________________________________________________________________________________________________________
+Find the top 5 products and id of products sold by sales
+MariaDB [superstore]> select product_id,product_name, sales from orders group by product_id order by sales desc limit 5;
++-----------------+-------------------------------------------------------+---------+
+| product_id      | product_name                                          | sales   |
++-----------------+-------------------------------------------------------+---------+
+| TEC-MA-10002412 | Cisco TelePresence System EX90 Videoconferencing Unit | 22638.5 |
+| OFF-BI-10000545 | GBC Ibimaster 500 Manual ProClick Binding System      | 9892.74 |
+| OFF-BI-10001120 | Ibico EPK-21 Electric Binding System                  | 9449.95 |
+| TEC-MA-10001047 | 3D Systems Cube Printer, 2nd Generation, Magenta      | 9099.93 |
+| TEC-CO-10004722 | Canon imageCLASS 2200 Advanced Copier                 | 8399.98 |
++-----------------+-------------------------------------------------------+---------+
+5 rows in set (0.313 sec)
+
+MariaDB [superstore]>
+____________________________________________________________________________________________________________________________________________________________
+ Display the names of the customers whose name contains the 
+         i.  second letter as 'R'
+         ii. fourth letter as 'd'
+select customer_name from orders where customer_name like '_r%';
+select customer_name from orders where customer_name like '___d%';
+____________________________________________________________________________________________________________________________________________________________
+Where is the least profitable product subcategory shipped the most? for the least profitable product sub-category, display the no_of_shipment by region and the profit made in each region in decreasing order of profit
